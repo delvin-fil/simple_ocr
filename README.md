@@ -1,5 +1,6 @@
 # simple_ocr
 Simple OCR for tessecart on python 3.6
+
 Программа распознавания текстов с изображения.
 
 Поддержка языков:
