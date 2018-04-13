@@ -5,6 +5,6 @@ Simple OCR for tessecart on python 3.6
 * Установленный tesseract
 * Python 3.6
 * Модули
-	1. PyQt5
-	2. PIL
-	3. pytesseract
+	- PyQt5
+	- PIL
+	- pytesseract
