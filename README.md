@@ -8,3 +8,5 @@ Simple OCR for tessecart on python 3.6
 	- PyQt5
 	- PIL
 	- pytesseract
+
+![Image](https://github.com/delvin-fil/simple_ocr/blob/master/screenshot.png)
