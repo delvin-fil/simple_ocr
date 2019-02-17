@@ -24,3 +24,4 @@ Simple OCR for tessecart on python 3.6
 1. Добавить progressbar.
 2. Добавить выбор языка распознавания.
 3. Добавить переводчик.
+4. Ну и, по совету, translate api.
