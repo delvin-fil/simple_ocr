@@ -1,37 +1,33 @@
-#!/usr/bin/env python3.6
+#!/usr/bin/env python3.10
 # -*- coding: utf-8 -*-
-# http://ipython.scipy.org/dist/
 import re
 import sys
 import warnings
 import os
 import time
 from PIL import Image
+import pickle
 import pytesseract
-from PyQt5 import (QtCore, QtGui, uic, QtWidgets)
-from PyQt5.QtWidgets import (QMainWindow, QTextEdit, QAction, QFileDialog, QApplication, QProgressBar)
+from PyQt5 import QtCore, QtGui, uic, QtWidgets
+from PyQt5.QtWidgets import QMainWindow, QTextEdit, QAction, QFileDialog, QApplication, QProgressBar
 from PyQt5.QtGui import QIcon, QPicture
 from PyQt5.QtCore import *
 import locale
 locale.setlocale(locale.LC_ALL, 'ru_RU.utf8')
-start = time.clock()
 warnings.filterwarnings("ignore")
 
-
-cwd = os.path.expanduser('~')
+cwd = os.path.dirname(os.path.abspath(__file__))
+print (cwd)
 dtout = ''
 filename = "ocr.ui"
-filename = f"{cwd}/codding/ocr/{filename}" # Заменить на путь к репозитрию
+filename = f"{cwd}/{filename}"
 Form, Base = uic.loadUiType(filename)
-
 
 class MyWindow(QtWidgets.QWidget, Form):
     def __init__(self, parent=None):
         QtWidgets.QWidget.__init__(self, parent)
         self.ui = Form()
         self.ui.setupUi(self)
-        self.timer = QBasicTimer()
-        self.step = 0
         self.ui.btnQuit.clicked.connect(QCoreApplication.instance().quit)
         self.ui.btnQuit.setToolTip("Выход")
         self.ui.btnConv.setToolTip("Распознать")
@@ -41,10 +37,14 @@ class MyWindow(QtWidgets.QWidget, Form):
         self.ui.mylabel_2.setText("Входное изображение")
         self.ui.btnConv.clicked.connect(self.ocr)
         self.ui.mylabel.setText(f" ")
-        # equ chi_tra rus jpn eng chi_sim        
+       
     def getfiles(self):
         global fname
-        fname = QFileDialog.getOpenFileName(self, "Open PNG", f"{cwd}/", "PNG (*.png);;GIF (*.gif);;JPG (*.jpg *.jpe *.JPEG );;TIFF (*.tiff);;All (*)")[0]
+        global fout
+        with open(f"{cwd}/path.txt", 'r') as f_read:
+            pth = f_read.read()
+            print (f"{pth}")
+        fname = QFileDialog.getOpenFileName(self, "Open PNG", f"{pth}/", "PNG (*.png);;GIF (*.gif);;JPG (*.jpg *.jpe *.JPEG );;TIFF (*.tiff);;All (*)")[0]
         if fname == '':
             QFileDialog(self, quit())
         with open(fname, 'rb') as data:
@@ -52,8 +52,10 @@ class MyWindow(QtWidgets.QWidget, Form):
             self.ui.mylabel.setText(f"Файл: {fname}")
             self.ui.mylabel_2.setPixmap(QtGui.QPixmap(f"{fname}"))
         print (f"\n{fname}")
-        global fout
         fout = re.sub(r'\.png|\.PNG', '', fname)
+        dir_path = os.path.dirname(fname)
+        with open(f"{cwd}/path.txt", 'w') as f_out:
+            f_out.write(dir_path + "/")
         fout = fout + '.txt'
 
     def ocr(self):
@@ -71,17 +73,13 @@ class MyWindow(QtWidgets.QWidget, Form):
                 f_out.write(out + "\n")
                 self.ui.mylabel.setText('Файл сохранен: ' + fout)
 
-finish = time.clock()
-itog = str(round(finish - start, 3))
-print(f"{itog} sec.")
-
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = MyWindow()
     pal = window.palette()
-    window.setFixedSize(656, 320)
+    #window.setFixedSize(656, 320)
     window.setWindowTitle("Gui for tesseract")
-    window.setWindowIcon(QtGui.QIcon(f"{cwd}/fontmanager.gif")) # Заменить на путь к иконке или комментировать
+    window.setWindowIcon(QtGui.QIcon(f"{cwd}/fontmanager.png")) 
     window.show()
     sys.exit(app.exec_())
     
