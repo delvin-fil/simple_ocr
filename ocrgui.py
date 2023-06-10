@@ -34,8 +34,7 @@ class MyWindow(QtWidgets.QWidget, Form):
         self.ui.showd.clicked.connect(self.getfiles)
         self.ui.btnSave.clicked.connect(self.save_f)
         self.ui.showd.setToolTip("Открывает изображение")
-        self.ui.mylabel_2.setText("Входное изображение")
-        self.ui.mylabel_2.setScaledContents(True)
+        self.ui.mylabel_2.setText("Входное изображение")        
         self.ui.btnConv.clicked.connect(self.ocr)
         self.ui.mylabel.setText(f" ")
        
