@@ -72,7 +72,7 @@ class MyWindow(QtWidgets.QWidget, Form):
             with open(fout, 'w') as f_out:
                 f_out.write(out + "\n")
                 self.ui.mylabel.setText('Файл сохранен: ' + fout)
-
+print("xyu")
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = MyWindow()
@@ -82,4 +82,3 @@ if __name__ == "__main__":
     window.setWindowIcon(QtGui.QIcon(f"{cwd}/fontmanager.png")) 
     window.show()
     sys.exit(app.exec_())
-    
