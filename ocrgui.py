@@ -17,7 +17,7 @@ locale.setlocale(locale.LC_ALL, 'ru_RU.utf8')
 warnings.filterwarnings("ignore")
 
 cwd = os.path.dirname(os.path.abspath(__file__))
-print (cwd)
+#print (cwd)
 dtout = ''
 filename = "ocr.ui"
 filename = f"{cwd}/{filename}"
@@ -35,6 +35,7 @@ class MyWindow(QtWidgets.QWidget, Form):
         self.ui.btnSave.clicked.connect(self.save_f)
         self.ui.showd.setToolTip("Открывает изображение")
         self.ui.mylabel_2.setText("Входное изображение")
+        self.ui.mylabel_2.setScaledContents(True)
         self.ui.btnConv.clicked.connect(self.ocr)
         self.ui.mylabel.setText(f" ")
        
@@ -43,7 +44,7 @@ class MyWindow(QtWidgets.QWidget, Form):
         global fout
         with open(f"{cwd}/path.txt", 'r') as f_read:
             pth = f_read.read()
-            print (f"{pth}")
+            #print (f"{pth}")
         fname = QFileDialog.getOpenFileName(self, "Open PNG", f"{pth}/", "PNG (*.png);;GIF (*.gif);;JPG (*.jpg *.jpe *.JPEG );;TIFF (*.tiff);;All (*)")[0]
         if fname == '':
             QFileDialog(self, quit())
@@ -51,7 +52,7 @@ class MyWindow(QtWidgets.QWidget, Form):
             self.ui.mylabel_2.setScaledContents(True)
             self.ui.mylabel.setText(f"Файл: {fname}")
             self.ui.mylabel_2.setPixmap(QtGui.QPixmap(f"{fname}"))
-        print (f"\n{fname}")
+        #print (f"\n{fname}")
         fout = re.sub(r'\.png|\.PNG', '', fname)
         dir_path = os.path.dirname(fname)
         with open(f"{cwd}/path.txt", 'w') as f_out:
